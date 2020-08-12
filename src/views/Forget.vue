@@ -50,22 +50,28 @@
             <div class="layui-form layui-form-pane">
               <form method="post">
                 <div class="layui-form-item">
-                  <label for="L_email" class="layui-form-label">邮箱</label>
+                  <label for="L_username" class="layui-form-label">用户名</label>
                   <div class="layui-input-inline">
-                    <input type="text" id="L_email" name="email" required lay-verify="required" autocomplete="off" class="layui-input">
+                    <ValidationProvider rules="required|email" v-slot="v">
+                      <input type="text" v-model="username" placeholder="请输入用户名" id="L_username" name="username" autocomplete="off" class="layui-input">
+                      <div class="err-tips" v-if="v.errors[0]">用户名{{v.errors[0]}}</div>
+                    </ValidationProvider>
                   </div>
                 </div>
                 <div class="layui-form-item">
-                  <label for="L_vercode" class="layui-form-label">人类验证</label>
+                  <label for="L_vercode" class="layui-form-label">验证码</label>
                   <div class="layui-input-inline">
-                    <input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
+                    <ValidationProvider rules="required|email" v-slot="v">
+                      <input type="text" id="L_vercode" v-model="vercode" name="vercode" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                      <div class="err-tips" v-if="v.errors[0]">验证码{{v.errors[0]}}</div>
+                    </ValidationProvider>
                   </div>
                   <div class="layui-form-mid">
                     <span style="color: #c00;">hello</span>
                   </div>
                 </div>
                 <div class="layui-form-item">
-                  <button class="layui-btn" alert="1" lay-filter="*" lay-submit>提交</button>
+                  <button class="layui-btn">提交</button>
                 </div>
               </form>
             </div>
@@ -80,7 +86,13 @@
 
 <script>
 export default {
-  name: 'Forget'
+  name: 'Forget',
+  data () {
+    return {
+      username: '',
+      vercode: ''
+    }
+  }
 }
 </script>
 

@@ -33,7 +33,7 @@
                     <label for="L_vercode" class="layui-form-label">验证码</label>
                       <div class="layui-input-inline">
                         <ValidationProvider rules="required|password" v-slot="v">
-                          <input type="text" v-model="code" id="L_vercode" name="vercode" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                          <input type="text" v-model="vercode" id="L_vercode" name="vercode" placeholder="请输入验证码" autocomplete="off" class="layui-input">
                           <div class="err-tips" v-if="v.errors[0]">用户名{{v.errors[0]}}</div>
                         </ValidationProvider>
                       </div>
@@ -72,8 +72,7 @@ export default {
       svg: '辅助文字',
       username: '',
       password: '',
-      code: '',
-      errorMsg: []
+      vercode: ''
     }
   },
   mounted () {
@@ -87,18 +86,6 @@ export default {
           this.svg = res.data
         }
       })
-    },
-    checkForm () {
-      this.errorMsg = []
-      if (!this.username) {
-        this.errorMsg.push('登录名为空！')
-      }
-      if (!this.password) {
-        this.errorMsg.push('密码为空！')
-      }
-      if (!this.code) {
-        this.errorMsg.push('验证码为空！')
-      }
     }
   }
 }

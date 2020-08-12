@@ -11,35 +11,50 @@
             <div class="layui-form layui-form-pane">
               <form method="post">
                 <div class="layui-form-item">
-                  <label for="L_email" class="layui-form-label">邮箱</label>
+                  <label for="L_username" class="layui-form-label">用户名</label>
                   <div class="layui-input-inline">
-                    <input type="text" id="L_email" name="email" required lay-verify="email" autocomplete="off" class="layui-input">
+                    <ValidationProvider rules="required|email" v-slot="v">
+                      <input type="text" id="L_username" v-model="username" placeholder="请输入用户名" name="username" autocomplete="off" class="layui-input">
+                      <div class="err-tips" v-if="v.errors[0]">用户名{{v.errors[0]}}</div>
+                    </ValidationProvider>
                   </div>
                   <div class="layui-form-mid layui-word-aux">将会成为您唯一的登入名</div>
                 </div>
                 <div class="layui-form-item">
-                  <label for="L_username" class="layui-form-label">昵称</label>
+                  <label for="L_nickname" class="layui-form-label">昵称</label>
                   <div class="layui-input-inline">
-                    <input type="text" id="L_username" name="username" required lay-verify="required" autocomplete="off" class="layui-input">
+                    <ValidationProvider rules="required|email" v-slot="v">
+                      <input type="text" id="L_nickname" v-model="nickname" placeholder="请输入昵称" name="nickname" autocomplete="off" class="layui-input">
+                      <div class="err-tips" v-if="v.errors[0]">用户名{{v.errors[0]}}</div>
+                    </ValidationProvider>
                   </div>
                 </div>
                 <div class="layui-form-item">
                   <label for="L_pass" class="layui-form-label">密码</label>
                   <div class="layui-input-inline">
-                    <input type="password" id="L_pass" name="pass" required lay-verify="required" autocomplete="off" class="layui-input">
+                    <ValidationProvider rules="required|email" v-slot="v">
+                      <input type="password" id="L_pass" v-model="password" placeholder="请输入密码" name="pass" autocomplete="off" class="layui-input">
+                      <div class="err-tips" v-if="v.errors[0]">密码{{v.errors[0]}}</div>
+                    </ValidationProvider>
                   </div>
-                  <div class="layui-form-mid layui-word-aux">6到16个字符</div>
+                  <div class="layui-form-mid layui-word-aux">6到20个字符</div>
                 </div>
                 <div class="layui-form-item">
                   <label for="L_repass" class="layui-form-label">确认密码</label>
                   <div class="layui-input-inline">
-                    <input type="password" id="L_repass" name="repass" required lay-verify="required" autocomplete="off" class="layui-input">
+                    <ValidationProvider rules="required|email" v-slot="v">
+                      <input type="password" id="L_repass" v-model="repass" name="repass" placeholder="请再次输入密码" autocomplete="off" class="layui-input">
+                      <div class="err-tips" v-if="v.errors[0]">确认密码{{v.errors[0]}}</div>
+                    </ValidationProvider>
                   </div>
                 </div>
                 <div class="layui-form-item">
-                  <label for="L_vercode" class="layui-form-label">人类验证</label>
+                  <label for="L_vercode" class="layui-form-label">验证码</label>
                   <div class="layui-input-inline">
-                    <input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
+                    <ValidationProvider rules="required|email" v-slot="v">
+                      <input type="text" id="L_vercode" v-model="vercode" name="vercode" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                      <div class="err-tips" v-if="v.errors[0]">验证码{{v.errors[0]}}</div>
+                    </ValidationProvider>
                   </div>
                   <div class="layui-form-mid">
                     <span style="color: #c00;">hello</span>
@@ -65,7 +80,16 @@
 
 <script>
 export default {
-  name: 'Reg'
+  name: 'Reg',
+  data () {
+    return {
+      username: '',
+      nickname: '',
+      password: '',
+      repass: '',
+      vercode: ''
+    }
+  }
 }
 </script>
 
