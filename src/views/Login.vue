@@ -1,5 +1,5 @@
 <template>
-  <div class="layui-container fly-marginTop">
+  <div class="layui-container fly-marginTop login-container">
     <div class="fly-panel fly-panel-user" pad20>
       <div class="layui-tab layui-tab-brief" lay-filter="user">
         <ul class="layui-tab-title">
@@ -37,8 +37,8 @@
                           <div class="err-tips" v-if="v.errors[0]">用户名{{v.errors[0]}}</div>
                         </ValidationProvider>
                       </div>
-                      <div class="layui-form-mid">
-                        <span style="color: #c00;">验证码区域</span>
+                      <div>
+                        <span class="svg" v-html="svg" @click="_getCaptcha"></span>
                       </div>
                   </div>
                   <div class="layui-form-item">
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { getCode } from '../api/login'
+import { getCaptcha } from '../api/login'
 
 export default {
   name: 'Login',
@@ -76,11 +76,11 @@ export default {
     }
   },
   mounted () {
-    this._getCode()
+    this._getCaptcha()
   },
   methods: {
-    _getCode () {
-      getCode().then(res => {
+    _getCaptcha () {
+      getCaptcha().then(res => {
         console.log('getCodeRes=', res)
         if (res.code === 200) {
           this.svg = res.data
@@ -111,7 +111,7 @@ export default {
 
   .svg {
     position: relative;
-    top: -15px;
+    top: -4px;
   }
 }
 </style>

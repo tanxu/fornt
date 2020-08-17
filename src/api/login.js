@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const getCode = async () => {
+const getCaptcha = async () => {
   let result = ''
   try {
     result = await axios.get('/getCaptcha')
@@ -14,5 +14,5 @@ const getCode = async () => {
 }
 
 export {
-  getCode
+  getCaptcha
 }
