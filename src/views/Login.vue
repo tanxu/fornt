@@ -34,7 +34,7 @@
                       <div class="layui-input-inline">
                         <ValidationProvider rules="required|password" v-slot="v">
                           <input type="text" v-model="vercode" id="L_vercode" name="vercode" placeholder="请输入验证码" autocomplete="off" class="layui-input">
-                          <div class="err-tips" v-if="v.errors[0]">用户名{{v.errors[0]}}</div>
+                          <div class="err-tips" v-if="v.errors[0]">验证码{{v.errors[0]}}</div>
                         </ValidationProvider>
                       </div>
                       <div>
@@ -69,7 +69,7 @@ export default {
   name: 'Login',
   data () {
     return {
-      svg: '辅助文字',
+      svg: '',
       username: '',
       password: '',
       vercode: ''

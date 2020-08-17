@@ -3,7 +3,9 @@
     <div class="fly-panel fly-panel-user" pad20>
       <div class="layui-tab layui-tab-brief" lay-filter="user">
         <ul class="layui-tab-title">
-          <li><router-link :to="{name: 'Login'}">登入</router-link></li>
+          <li>
+            <router-link :to="{name: 'Login'}">登入</router-link>
+          </li>
           <li class="layui-this">找回密码<!--重置密码--></li>
         </ul>
         <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
@@ -53,8 +55,9 @@
                   <label for="L_username" class="layui-form-label">用户名</label>
                   <div class="layui-input-inline">
                     <ValidationProvider rules="required|email" v-slot="v">
-                      <input type="text" v-model="username" placeholder="请输入用户名" id="L_username" name="username" autocomplete="off" class="layui-input">
-                      <div class="err-tips" v-if="v.errors[0]">用户名{{v.errors[0]}}</div>
+                      <input type="text" v-model="username" placeholder="请输入用户名" id="L_username" name="username"
+                             autocomplete="off" class="layui-input">
+                      <div class="err-tips" v-if="v.errors[0]">用户名{{ v.errors[0] }}</div>
                     </ValidationProvider>
                   </div>
                 </div>
@@ -62,16 +65,17 @@
                   <label for="L_vercode" class="layui-form-label">验证码</label>
                   <div class="layui-input-inline">
                     <ValidationProvider rules="required|email" v-slot="v">
-                      <input type="text" id="L_vercode" v-model="vercode" name="vercode" placeholder="请输入验证码" autocomplete="off" class="layui-input">
-                      <div class="err-tips" v-if="v.errors[0]">验证码{{v.errors[0]}}</div>
+                      <input type="text" id="L_vercode" v-model="vercode" name="vercode" placeholder="请输入验证码"
+                             autocomplete="off" class="layui-input">
+                      <div class="err-tips" v-if="v.errors[0]">验证码{{ v.errors[0] }}</div>
                     </ValidationProvider>
                   </div>
-                  <div class="layui-form-mid">
-                    <span style="color: #c00;">hello</span>
+                  <div>
+                    <span class="svg" v-html="svg" @click="_getCaptcha"></span>
                   </div>
                 </div>
                 <div class="layui-form-item">
-                  <button class="layui-btn">提交</button>
+                  <button class="layui-btn" type="button" @click="submit">提交</button>
                 </div>
               </form>
             </div>
@@ -85,12 +89,36 @@
 </template>
 
 <script>
+import { getCaptcha, forget } from '../api/login'
+
 export default {
   name: 'Forget',
   data () {
     return {
+      svg: '',
       username: '',
       vercode: ''
+    }
+  },
+  mounted () {
+    this._getCaptcha()
+  },
+  methods: {
+    submit () {
+      forget({ username: this.username, code: this.code }).then(res => {
+        console.log(res)
+        if (res.code === 200) {
+          alert('邮件发送成功')
+        }
+      })
+    },
+    _getCaptcha () {
+      getCaptcha().then(res => {
+        console.log('getCodeRes=', res)
+        if (res.code === 200) {
+          this.svg = res.data
+        }
+      })
     }
   }
 }
