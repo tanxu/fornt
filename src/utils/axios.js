@@ -22,7 +22,6 @@ class HttpRequest {
   interceptors (instance) {
     // 封装 axios 请求，返回重新封装的数据格式
     instance.interceptors.request.use((config) => {
-      console.log('config :', config)
       return config
     }, (err) => {
       errorHandle(err)
@@ -30,7 +29,6 @@ class HttpRequest {
     })
 
     instance.interceptors.response.use((res) => {
-      console.log('res :', res)
       if (res.status === 200) {
         return Promise.resolve(res.data)
       } else {

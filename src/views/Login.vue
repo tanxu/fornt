@@ -11,7 +11,7 @@
         <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
           <div class="layui-tab-item layui-show">
             <div class="layui-form layui-form-pane">
-              <ValidationObserver>
+              <ValidationObserver ref="observer" v-slot="{validate}">
                 <form method="post">
                   <div class="layui-form-item">
                     <label for="L_username" class="layui-form-label">用户名</label>
@@ -48,7 +48,7 @@
                     </div>
                   </div>
                   <div class="layui-form-item">
-                    <button class="layui-btn">立即登录</button>
+                    <button class="layui-btn" @click="validate().then(submit)" type="button">立即登录</button>
                     <span style="padding-left:20px;">
                       <router-link :to="{name: 'Forget'}">忘记密码？</router-link>
                   </span>
@@ -71,8 +71,9 @@
 </template>
 
 <script>
-import { getCaptcha } from '../api/login'
+import { getCaptcha, login } from '../api/login'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import { v4 as uuid } from 'uuid'
 
 export default {
   name: 'Login',
@@ -86,12 +87,37 @@ export default {
     }
   },
   mounted () {
+    let sid = ''
+    if (localStorage.getItem('sid')) {
+      sid = localStorage.getItem('sid')
+    } else {
+      sid = uuid()
+      localStorage.setItem('sid', sid)
+    }
+    this.$store.commit('setSid', sid)
     this._getCaptcha()
   },
   methods: {
+    async submit () {
+      const isValid = await this.$refs.observer.validate()
+      if (!isValid) {
+        return
+      }
+
+      login({
+        username: this.username,
+        password: this.password,
+        code: this.vercode,
+        sid: this.$store.state.sid
+      }).then(res => {
+        if (res.code === 200) {
+          console.log('res', res)
+        }
+      })
+    },
     _getCaptcha () {
-      getCaptcha().then(res => {
-        console.log('getCodeRes=', res)
+      const sid = this.$store.state.sid
+      getCaptcha(sid).then(res => {
         if (res.code === 200) {
           this.svg = res.data
         }
