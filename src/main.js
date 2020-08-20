@@ -5,7 +5,7 @@ import router from './router'
 import store from './store'
 
 // Vee Validate
-import './veevalidate'
+import '@/util/veevalidate-i18n'
 
 Vue.config.productionTip = false
 
