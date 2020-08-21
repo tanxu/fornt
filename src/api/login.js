@@ -6,7 +6,7 @@ import axios from '../utils/request'
  * @returns {AxiosPromise}
  */
 const getCaptcha = (sid) => {
-  return axios.get('/getCaptcha', {
+  return axios.get('/public/getCaptcha', {
     params: {
       sid: sid
     }
@@ -18,7 +18,7 @@ const getCaptcha = (sid) => {
  * @returns {AxiosPromise}
  */
 const login = (loginInfo) => {
-  return axios.post('/login', { ...loginInfo })
+  return axios.post('/login/login', { ...loginInfo })
 }
 
 /**
