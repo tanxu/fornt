@@ -20,6 +20,14 @@ const getCaptcha = (sid) => {
 const login = (loginInfo) => {
   return axios.post('/login/login', { ...loginInfo })
 }
+/**
+ * 注册接口
+ * @param loginInfo 注册信息
+ * @returns {AxiosPromise}
+ */
+const reg = (regInfo) => {
+  return axios.post('/login/reg', { ...regInfo })
+}
 
 /**
  * 找回密码接口
@@ -33,5 +41,6 @@ const forget = (option) => {
 export {
   getCaptcha,
   forget,
-  login
+  login,
+  reg
 }

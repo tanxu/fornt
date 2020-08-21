@@ -113,15 +113,13 @@ export default {
         if (res.code === 200) {
           this.username = ''
           this.password = ''
-          this.code = ''
+          this.vercode = ''
           requestAnimationFrame(() => {
             this.$refs.observer.reset()
           })
           console.log('res', res)
-        } else if (res.code === 401) {
-          this.$refs.vercode.setErrors([res.msg])
-        } else if (res.code === 500) {
-          this.$alert('用户名密码校验失败，请检查！')
+        } else {
+          this.$refs.ovserver.setErrors(res.msg)
         }
       })
     },
