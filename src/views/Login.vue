@@ -37,7 +37,7 @@
                   <div class="layui-form-item">
                     <label for="L_vercode" class="layui-form-label">验证码</label>
                     <div class="layui-input-inline">
-                      <ValidationProvider name="vercode" rules="required|length:4" v-slot="v">
+                      <ValidationProvider name="vercode" ref="vercode" rules="required|length:4" v-slot="v">
                         <input type="text" v-model="vercode" id="L_vercode" name="vercode" placeholder="请输入验证码"
                                autocomplete="off" class="layui-input">
                         <div class="err-tips" v-if="v.errors[0]">{{ v.errors[0] }}</div>
@@ -87,7 +87,6 @@ export default {
     }
   },
   mounted () {
-    this.$alert('dslfkjsdlkfj')
     let sid = ''
     if (localStorage.getItem('sid')) {
       sid = localStorage.getItem('sid')
@@ -112,7 +111,17 @@ export default {
         sid: this.$store.state.sid
       }).then(res => {
         if (res.code === 200) {
+          this.username = ''
+          this.password = ''
+          this.code = ''
+          requestAnimationFrame(() => {
+            this.$refs.observer.reset()
+          })
           console.log('res', res)
+        } else if (res.code === 401) {
+          this.$refs.vercode.setErrors([res.msg])
+        } else if (res.code === 500) {
+          this.$alert('用户名密码校验失败，请检查！')
         }
       })
     },
