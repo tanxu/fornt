@@ -2,7 +2,13 @@
   <div v-show="isShow">
     <div class="alert">
       <div class="flex">{{ msg }}</div>
-      <div class="btnCommon success" @click="close">确定</div>
+      <div v-if="type==='alert'">
+        <div class="btnCommon success" @click="close">确定</div>
+      </div>
+      <div v-else class="space-round">
+        <div class="btnCommon cancel" @click="cancelEvent">取消</div>
+        <div class="btnCommon success" @click="successEvent">确认</div>
+      </div>
     </div>
     <div class="mask" @click="closeMask"></div>
   </div>
@@ -11,6 +17,10 @@
 <script>
 export default {
   props: {
+    type: {
+      type: String,
+      default: 'alert'
+    },
     msg: {
       type: String,
       default: ''
@@ -18,6 +28,14 @@ export default {
     isShow: {
       type: Boolean,
       default: false
+    },
+    success: {
+      type: Function,
+      default: () => { console.log('点击的success') }
+    },
+    cancel: {
+      type: Function,
+      default: () => { console.log('点击的cancel') }
     }
   },
   methods: {
@@ -25,6 +43,16 @@ export default {
       this.isShow = false
     },
     closeMask () {
+      if (this.type === 'alert') {
+        this.close()
+      }
+    },
+    cancelEvent () {
+      this.cancel()
+      this.close()
+    },
+    successEvent () {
+      this.success()
       this.close()
     }
   }
@@ -60,6 +88,15 @@ export default {
   display: flex;
 }
 
+.space-round{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 0 10px;
+}
+
 .mask {
   position: fixed;
   width: 100%;
@@ -86,6 +123,10 @@ export default {
     &:hover{
       background-color: @btn-dark;
     }
+  }
+  &.cancel{
+    background-color: #ededed;
+    color: #333;
   }
 }
 </style>
