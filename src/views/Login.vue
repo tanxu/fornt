@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { getCaptcha, login } from '../api/login'
+import { getCaptcha, login } from '@/api/login'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { v4 as uuid } from 'uuid'
 
@@ -87,6 +87,7 @@ export default {
     }
   },
   mounted () {
+    this.$alert('dslfkjsdlkfj')
     let sid = ''
     if (localStorage.getItem('sid')) {
       sid = localStorage.getItem('sid')
