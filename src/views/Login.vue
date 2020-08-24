@@ -118,8 +118,10 @@ export default {
             this.$refs.observer.reset()
           })
           console.log('res', res)
+        } else if (res.code === 401) {
+          this.$refs.vercode.setErrors([res.msg])
         } else {
-          this.$refs.ovserver.setErrors(res.msg)
+          this.$alert(res.msg)
         }
       })
     },
