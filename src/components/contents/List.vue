@@ -77,7 +77,7 @@ export default {
       this._getList()
     },
     _getList () {
-      if (this.isRepeat) return
+      // if (this.isRepeat) return
       this.isRepeat = true
       if (this.isEnd) return
       const options = {
@@ -105,7 +105,7 @@ export default {
       }).catch(err => {
         this.isRepeat = false
         if (err) {
-          this.$alert(err.msg)
+          this.$alert(err.message)
         }
       })
     },
