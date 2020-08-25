@@ -22,4 +22,12 @@ export default {
   @import "assets/layui/css/layui.css";
   @import "assets/layui/css/modules/layer/default/layer.css";
   @import "assets/css/global.css";
+
+  .svg{
+    position: relative;
+    top: -4px;
+  }
+  .gray{
+    color: #999;
+  }
 </style>

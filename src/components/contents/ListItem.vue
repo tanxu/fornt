@@ -26,13 +26,17 @@
           </span>
         </div>
         <div class="fly-list-badge" v-show="item.tags.length>0">
-          <span class="layui-badge layui-bg-red" v-for="(tag, tagIndex) in item.tags" :key="'tag'+tagIndex" :class="tag.class">{{ tag.name }}</span>
+          <span class="layui-badge layui-bg-red" v-for="(tag, tagIndex) in item.tags" :key="'tag'+tagIndex"
+                :class="tag.class">{{ tag.name }}</span>
         </div>
       </li>
     </ul>
     <div style="text-align: center" v-show="isShow">
-      <div class="laypage-main">
+      <div class="laypage-main" v-if="!isEnd">
         <a @click.prevent="more" class="laypage-next">更多求解</a>
+      </div>
+      <div class="nomore gray" v-else>
+        没有更多了
       </div>
     </div>
   </div>
@@ -42,9 +46,14 @@
 import _ from 'lodash'
 import moment from 'moment'
 import 'moment/locale/zh-cn'
+
 export default {
   name: 'ListItem',
   props: {
+    isEnd: {
+      default: false,
+      type: Boolean
+    },
     lists: {
       default: () => [],
       type: Array
@@ -100,6 +109,9 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="less" scoped>
+.nomore {
+  font-size: 16px;
+  padding: 30px 0;
+}
 </style>

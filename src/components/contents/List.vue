@@ -37,6 +37,8 @@ export default {
       // 分页
       page: 0,
       limit: 20,
+      isEnd: false, // 是否最后页
+      isRepeat: false, // 是否加载中
       catalog: '',
       lists: [
         {
@@ -75,6 +77,9 @@ export default {
       this._getList()
     },
     _getList () {
+      if (this.isRepeat) return
+      this.isRepeat = true
+      if (this.isEnd) return
       const options = {
         catalog: this.catalog,
         isTop: 0,
@@ -85,7 +90,23 @@ export default {
         status: this.status
       }
       getList(options).then(res => {
+        this.isRepeat = false
         console.log(res)
+        if (res.code === 200) {
+          if (res.data.length < this.limit) {
+            this.isEnd = true
+          }
+          if (this.lists.length === 0) {
+            this.lists = res.data
+          } else {
+            this.lists = this.lists.concat(res.data)
+          }
+        }
+      }).catch(err => {
+        this.isRepeat = false
+        if (err) {
+          this.$alert(err.msg)
+        }
       })
     },
     search (val) {
