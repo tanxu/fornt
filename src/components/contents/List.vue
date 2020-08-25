@@ -16,13 +16,15 @@
       </span>
     </div>
 
-    <list-item-comp />
+    <list-item-comp :lists="lists" @nextPage="nextPageHandle" />
 
   </div>
 </template>
 
 <script>
 import ListItemComp from '@/components/contents/ListItem'
+import { getList } from '@/api/content'
+
 export default {
   name: 'List',
   components: { ListItemComp },
@@ -30,10 +32,62 @@ export default {
     return {
       status: '',
       tag: '',
-      sort: 'created'
+      sort: 'created',
+
+      // 分页
+      page: 0,
+      limit: 20,
+      catalog: '',
+      lists: [
+        {
+          user: {
+            name: 'tttt',
+            isVip: 2
+          },
+          title: 'dadasd',
+          content: 'sflkjsklfjs',
+          create_time: '2020-08-23 10:10:10',
+          catalog: 'ask',
+          fav: 40,
+          isEnd: 0,
+          reads: 10,
+          answer: 44,
+          status: 0,
+          isTop: 0,
+          tags: [{
+            name: '精华',
+            class: 'layui-bg-red'
+          }, {
+            name: '热门',
+            class: 'layui-bg-blue'
+          }]
+        }
+      ]
     }
   },
+  mounted () {
+    this._getList()
+  },
   methods: {
+    // 加载更多
+    nextPageHandle () {
+      this.page++
+      this._getList()
+    },
+    _getList () {
+      const options = {
+        catalog: this.catalog,
+        isTop: 0,
+        page: this.page,
+        limit: this.limit,
+        sort: this.sort,
+        tag: this.tag,
+        status: this.status
+      }
+      getList(options).then(res => {
+        console.log(res)
+      })
+    },
     search (val) {
       if (typeof val === 'undefined' && this.current === '') {
         return
