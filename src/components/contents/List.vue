@@ -34,6 +34,8 @@ export default {
       tag: '',
       sort: 'created',
 
+      current: '', // 当前标签
+
       // 分页
       page: 0,
       limit: 20,
@@ -69,6 +71,14 @@ export default {
   },
   mounted () {
     this._getList()
+  },
+  watch: {
+    current (newVal, oldVal) {
+      this.page = 0
+      this.lists = []
+      this.isEnd = false
+      this._getList()
+    }
   },
   methods: {
     // 加载更多
