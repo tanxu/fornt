@@ -5,7 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    sid: ''
+    sid: '',
+    // 是否登录
+    isLogin: false,
+    // 用户唯一标识
+    token: ''
   },
   mutations: {
     setSid (state, value) {
