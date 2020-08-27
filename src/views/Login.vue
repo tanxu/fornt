@@ -111,13 +111,17 @@ export default {
         sid: this.$store.state.sid
       }).then(res => {
         if (res.code === 200) {
+          this.$store.commit('setUserInfo', res.data)
+          this.$store.commit('setIsLogin', true)
           this.username = ''
           this.password = ''
           this.vercode = ''
           requestAnimationFrame(() => {
             this.$refs.observer.reset()
           })
-          console.log('res', res)
+          this.$router.push({
+            name: 'Home'
+          })
         } else if (res.code === 401) {
           this.$refs.vercode.setErrors([res.msg])
         } else {

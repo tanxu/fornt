@@ -9,11 +9,19 @@ export default new Vuex.Store({
     // 是否登录
     isLogin: false,
     // 用户唯一标识
-    token: ''
+    token: '',
+    // 用户信息
+    userInfo: {}
   },
   mutations: {
     setSid (state, value) {
       state.sid = value
+    },
+    setUserInfo (state, value) {
+      state.userInfo = value
+    },
+    setIsLogin (state, value) {
+      state.isLogin = value
     }
   },
   actions: {
