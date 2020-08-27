@@ -74,13 +74,23 @@ export default {
   },
   watch: {
     current (newVal, oldVal) {
+      this.init()
+    },
+    '$route' (newVal, oldVal) {
+      const catalog = newVal.params.catalog
+      if (typeof catalog !== 'undefined' && catalog !== '') {
+        this.catalog = catalog
+      }
+      this.init()
+    }
+  },
+  methods: {
+    init () {
       this.page = 0
       this.lists = []
       this.isEnd = false
       this._getList()
-    }
-  },
-  methods: {
+    },
     // 加载更多
     nextPageHandle () {
       this.page++
