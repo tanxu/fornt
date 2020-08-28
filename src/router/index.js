@@ -6,6 +6,13 @@ const Login = () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
 const Reg = () => import(/* webpackChunkName: "reg" */ '../views/Reg.vue')
 const Forget = () => import(/* webpackChunkName: "forget" */ '../views/Forget.vue')
 const Index = () => import(/* webpackChunkName: "index" */ '../views/channels/Index.vue')
+const Center = () => import(/* webpackChunkName: "center" */ '../views/Center.vue')
+const UserCenter = () => import(/* webpackChunkName: "user-center" */ '../components/user/Center.vue')
+const UserSettings = () => import(/* webpackChunkName: "user-center" */ '../components/user/Settings.vue')
+const UserOthers = () => import(/* webpackChunkName: "user-center" */ '../components/user/Others.vue')
+const UserMessage = () => import(/* webpackChunkName: "user-center" */ '../components/user/Message.vue')
+const UserPosts = () => import(/* webpackChunkName: "user-center" */ '../components/user/Posts.vue')
+const User = () => import(/* webpackChunkName: "user-center" */ '../views/User.vue')
 const Template1 = () => import(/* webpackChunkName: "template1" */ '../views/channels/Template1.vue')
 
 Vue.use(VueRouter)
@@ -48,6 +55,42 @@ const routes = [
     path: '/forget',
     name: 'Forget',
     component: Forget
+  },
+  {
+    path: '/user',
+    name: 'User',
+    component: User
+  },
+  {
+    path: '/center',
+    component: Center,
+    children: [
+      {
+        path: '',
+        name: 'UserCenter',
+        component: UserCenter
+      },
+      {
+        path: 'settings',
+        name: 'UserSettings',
+        component: UserSettings
+      },
+      {
+        path: 'others',
+        name: 'UserOthers',
+        component: UserOthers
+      },
+      {
+        path: 'message',
+        name: 'UserMessage',
+        component: UserMessage
+      },
+      {
+        path: 'posts',
+        name: 'UserPosts',
+        component: UserPosts
+      }
+    ]
   }
 ]
 
