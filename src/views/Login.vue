@@ -81,8 +81,8 @@ export default {
   data () {
     return {
       svg: '',
-      username: '',
-      password: '',
+      username: 'brian@qq.com',
+      password: '112233',
       vercode: ''
     }
   },

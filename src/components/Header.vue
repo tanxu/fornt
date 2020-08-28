@@ -18,7 +18,7 @@
 
       <ul class="layui-nav fly-nav-user">
 
-        <template v-if="isLogin">
+        <template v-if="!isLogin">
           <!-- 未登入的状态 -->
           <li class="layui-nav-item">
             <a class="iconfont icon-touxiang layui-hide-xs" href="../user/login.html"></a>
@@ -39,19 +39,19 @@
 
         <template v-else>
           <!-- 登入后的状态 -->
-          <li class="layui-nav-item">
+          <li class="layui-nav-item" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
             <a class="fly-nav-avatar" href="javascript:;">
-              <cite class="layui-hide-xs">{{ userInfo.name }}</cite>
+              <cite class="layui-hide-xs">{{ userInfo.nickname }}</cite>
 <!--              <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>-->
               <i class="layui-badge fly-badge-vip layui-hide-xs">VIP{{ userInfo.isVip }}</i>
               <img :src="userInfo.pic">
             </a>
-            <dl class="layui-nav-child">
-              <dd><a href="user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-              <dd><a href="user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
-              <dd><a href="user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
+            <dl class="layui-nav-child layui-anim layui-anim-upbit" :class="{'layui-show': isHover}">
+              <dd><router-link to=""><i class="layui-icon">&#xe620;</i>基本设置</router-link></dd>
+              <dd><router-link to=""><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</router-link></dd>
+              <dd><router-link to=""><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</router-link></dd>
               <hr style="margin: 5px 0;">
-              <dd><a href="/user/logout/" style="text-align: center;">退出</a></dd>
+              <dd><a href="javascript:;" @click="logout" style="text-align: center;">退出</a></dd>
             </dl>
           </li>
         </template>
@@ -65,12 +65,31 @@
 <script>
 export default {
   name: 'Header',
+  data () {
+    return {
+      isHover: false,
+      timer: null
+    }
+  },
   computed: {
     isLogin () {
       return this.$store.state.isLogin
     },
     userInfo () {
       return this.$store.state.userInfo || { name: '', pic: '', isVip: 0 }
+    }
+  },
+  methods: {
+    logout () {},
+    mouseEnter () {
+      clearTimeout(this.timer)
+      this.isHover = true
+    },
+    mouseLeave () {
+      clearTimeout(this.timer)
+      this.timer = setTimeout(() => {
+        this.isHover = false
+      }, 200)
     }
   }
 }
