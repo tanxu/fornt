@@ -1,12 +1,12 @@
 <template>
   <div class="layui-container fly-marginTop fly-user-main">
     <ul class="layui-nav layui-nav-tree layui-inline">
-      <router-link tag="li" class="layui-nav-item" v-for="(item,index) in lists" :to="{name: item.name}" :key="'center'+index">
-        <a href="javascript:;">
-          <i class="layui-icon" v-html="item.icon"></i>
+      <li class="layui-nav-item" v-for="(item,index) in lists" :key="'center'+index">
+        <router-link :to="{name: item.name}">
+          <i class="layui-icon" :class="item.icon"></i>
           {{ item.title }}
-        </a>
-      </router-link>
+        </router-link>
+      </li>
     </ul>
     <router-view />
   </div>
@@ -18,12 +18,12 @@ export default {
   data () {
     return {
       lists: [
-        { name: 'User', path: '', title: '我的主页', icon: '&#xe612;' },
-        { name: 'UserCenter', path: '', title: '用户中心', icon: '&#xe612;' },
-        { name: 'UserSettings', path: '', title: '基本设置', icon: '&#xe620;' },
-        { name: 'UserPosts', path: '', title: '基本帖子', icon: '&#xe620;' },
-        { name: 'UserMessage', path: '', title: '我的消息', icon: '&#xe611;' },
-        { name: 'UserOthers', path: '', title: '其他设置', icon: '&#xe620;' }
+        { name: 'User', path: '', title: '我的主页', icon: 'layui-icon-home' },
+        { name: 'UserCenter', path: '', title: '用户中心', icon: 'layui-icon-friends' },
+        { name: 'UserSettings', path: '', title: '基本设置', icon: 'layui-icon-set' },
+        { name: 'UserPosts', path: '', title: '我的帖子', icon: 'layui-icon-form' },
+        { name: 'UserMessage', path: '', title: '我的消息', icon: 'layui-icon-reply-fill' },
+        { name: 'UserOthers', path: '', title: '其他设置', icon: 'layui-icon-component' }
       ]
     }
   }
