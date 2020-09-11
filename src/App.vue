@@ -23,6 +23,21 @@ export default {
   @import "assets/layui/css/modules/layer/default/layer.css";
   @import "assets/css/global.css";
 
+  .pl0{
+    padding-left: 0;
+  }
+  .pr0{
+    padding-right: 0;
+  }
+  .text-center{
+    text-align: center;
+  }
+  .text-left{
+    text-align: left;
+  }
+  .text-right{
+    text-align: right;
+  }
   .svg{
     position: relative;
     top: -4px;

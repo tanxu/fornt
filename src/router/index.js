@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Home from '@/views/Home.vue'
+
 const Login = () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
 const Reg = () => import(/* webpackChunkName: "reg" */ '../views/Reg.vue')
 const Forget = () => import(/* webpackChunkName: "forget" */ '../views/Forget.vue')
@@ -17,6 +18,8 @@ const MyInfo = () => import(/* webpackChunkName: "user-center" */ '../components
 const PicUpload = () => import(/* webpackChunkName: "user-center" */ '../components/user/common/PicUpload.vue')
 const Password = () => import(/* webpackChunkName: "user-center" */ '../components/user/common/Password.vue')
 const Accounts = () => import(/* webpackChunkName: "user-center" */ '../components/user/common/Accounts.vue')
+const MyPost = () => import(/* webpackChunkName: "user-center" */ '../components/user/common/MyPost.vue')
+const MyCollection = () => import(/* webpackChunkName: "user-center" */ '../components/user/common/MyCollection.vue')
 const Template1 = () => import(/* webpackChunkName: "template1" */ '../views/channels/Template1.vue')
 
 Vue.use(VueRouter)
@@ -114,7 +117,19 @@ const routes = [
       {
         path: 'posts',
         name: 'UserPosts',
-        component: UserPosts
+        component: UserPosts,
+        children: [
+          {
+            path: 'mypost',
+            name: 'UserPostsMyPost',
+            component: MyPost
+          },
+          {
+            path: 'mycollection',
+            name: 'UserPostsMyCollection',
+            component: MyCollection
+          }
+        ]
       }
     ]
   }

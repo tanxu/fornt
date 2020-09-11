@@ -38,10 +38,11 @@ export default {
           activeClass: 'layui-this'
         },
         {
-          name: 'UserPosts',
+          name: 'UserPostsMyPost',
           path: '',
           title: '我的帖子',
-          icon: 'layui-icon-form'
+          icon: 'layui-icon-form',
+          activeClass: 'layui-this'
         },
         {
           name: 'UserMessage',
