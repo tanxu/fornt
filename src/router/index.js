@@ -13,6 +13,10 @@ const UserOthers = () => import(/* webpackChunkName: "user-center" */ '../compon
 const UserMessage = () => import(/* webpackChunkName: "user-center" */ '../components/user/Message.vue')
 const UserPosts = () => import(/* webpackChunkName: "user-center" */ '../components/user/Posts.vue')
 const User = () => import(/* webpackChunkName: "user-center" */ '../views/User.vue')
+const MyInfo = () => import(/* webpackChunkName: "user-center" */ '../components/user/common/MyInfo.vue')
+const PicUpload = () => import(/* webpackChunkName: "user-center" */ '../components/user/common/PicUpload.vue')
+const Password = () => import(/* webpackChunkName: "user-center" */ '../components/user/common/Password.vue')
+const Accounts = () => import(/* webpackChunkName: "user-center" */ '../components/user/common/Accounts.vue')
 const Template1 = () => import(/* webpackChunkName: "template1" */ '../views/channels/Template1.vue')
 
 Vue.use(VueRouter)
@@ -73,7 +77,29 @@ const routes = [
       {
         path: 'settings',
         name: 'UserSettings',
-        component: UserSettings
+        component: UserSettings,
+        children: [
+          {
+            path: 'info',
+            name: 'UserSettingsInfo',
+            component: MyInfo
+          },
+          {
+            path: 'pic',
+            name: 'UserSettingsPicUpload',
+            component: PicUpload
+          },
+          {
+            path: 'passwd',
+            name: 'UserSettingsPassword',
+            component: Password
+          },
+          {
+            path: 'accounts',
+            name: 'UserSettingsAccounts',
+            component: Accounts
+          }
+        ]
       },
       {
         path: 'others',
