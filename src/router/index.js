@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 
 import Home from '@/views/Home.vue'
 
@@ -71,6 +72,7 @@ const routes = [
   {
     path: '/center',
     component: Center,
+    meta: { requireAuth: true },
     children: [
       {
         path: '',
@@ -138,6 +140,29 @@ const routes = [
 const router = new VueRouter({
   linkExactActiveClass: 'layui-this',
   routes
+})
+router.beforeEach((to, from, next) => {
+  // 取缓存中的token和用户信息
+  const token = localStorage.getItem('token')
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+  if (token !== '' && token !== null) {
+    store.commit('setToken', token)
+    store.commit('setUserInfo', userInfo)
+    store.commit('setIsLogin', true)
+  }
+
+  if (to.matched.some(record => record.meta.requireAuth)) {
+    const isLogin = store.state.isLogin
+    if (isLogin) {
+      // 已经登录
+      next()
+    } else {
+      // 未登录
+      next('/login')
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

@@ -47,9 +47,9 @@
               <img :src="userInfo.pic">
             </a>
             <dl class="layui-nav-child layui-anim layui-anim-upbit" :class="{'layui-show': isHover}">
-              <dd><router-link to=""><i class="layui-icon">&#xe620;</i>基本设置</router-link></dd>
-              <dd><router-link to=""><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</router-link></dd>
-              <dd><router-link to=""><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</router-link></dd>
+              <dd><router-link :to="{name:'UserSettingsInfo'}"><i class="layui-icon">&#xe620;</i>基本设置</router-link></dd>
+              <dd><router-link :to="{name:'UserMessage'}"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</router-link></dd>
+              <dd><router-link :to="{name:'User'}"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</router-link></dd>
               <hr style="margin: 5px 0;">
               <dd><a href="javascript:;" @click="logout" style="text-align: center;">退出</a></dd>
             </dl>
@@ -80,7 +80,15 @@ export default {
     }
   },
   methods: {
-    logout () {},
+    logout () {
+      this.$confirm('确认退出吗?', () => {
+        localStorage.clear()
+        this.$store.commit('setUserInfo', { })
+        this.$store.commit('setIsLogin', false)
+        this.$store.commit('setToken', '')
+        this.$router.push('/')
+      })
+    },
     mouseEnter () {
       clearTimeout(this.timer)
       this.isHover = true
