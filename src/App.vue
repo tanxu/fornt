@@ -38,6 +38,12 @@ export default {
   .text-right{
     text-align: right;
   }
+  .pull-right{
+    float: right !important;
+  }
+  .orange{
+    color: #ff5722;
+  }
   .svg{
     position: relative;
     top: -4px;
