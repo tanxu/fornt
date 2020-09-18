@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store'
+import jwt from 'jsonwebtoken'
+import moment from 'moment'
 
 import Home from '@/views/Home.vue'
 
@@ -146,9 +148,18 @@ router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
   const userInfo = JSON.parse(localStorage.getItem('userInfo'))
   if (token !== '' && token !== null) {
-    store.commit('setToken', token)
-    store.commit('setUserInfo', userInfo)
-    store.commit('setIsLogin', true)
+    // 一般情况下, token 8-24小时   refresh token 1个月
+    const payload = jwt.decode(token)
+    // console.log(moment().isBefore(moment(payload.exp * 1000)))
+    // console.log(moment(payload.exp * 1000).format('YYYY-MM-DD HH:mm:ss'))
+    if (moment().isBefore(moment(payload.exp * 1000))) {
+      // 如果当前时间是在token过期之前的, token没过期
+      store.commit('setToken', token)
+      store.commit('setUserInfo', userInfo)
+      store.commit('setIsLogin', true)
+    } else {
+      localStorage.clear()
+    }
   }
 
   if (to.matched.some(record => record.meta.requireAuth)) {
