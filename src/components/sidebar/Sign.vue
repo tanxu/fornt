@@ -5,7 +5,7 @@
       <i class="fly-mid"></i>
       <a href="javascript:;" class="fly-link" id="LAY_signinHelp" @click="showInfo">说明</a>
       <i class="fly-mid"></i>
-      <a href="javascript:;" class="fly-link" id="LAY_signinTop">活跃榜<span class="layui-badge-dot"></span></a>
+      <a href="javascript:;" class="fly-link" id="LAY_signinTop" @click="showTop">活跃榜<span class="layui-badge-dot"></span></a>
       <span class="fly-signin-days">已连续签到<cite>16</cite>天</span>
     </div>
     <div class="fly-panel-main fly-signin-main">
@@ -67,6 +67,32 @@
         </div>
       </div>
     </div>
+
+    <div class="modal" v-show="showList">
+      <div class="mask" @click="close"></div>
+      <div class="layui-layer layui-layer-page" :class="{active: isShow}">
+        <div class="layui-layer-title">签到活跃榜 - TOP 20 <i @click="close" class="layui-icon layui-icon-close pull-right"></i></div>
+        <div class="layui-layer-content pd0">
+          <div class="layui-tab layui-tab-brief">
+            <ul class="layui-tab-title">
+              <li :class="{'layui-this': current === 0}" @click="choose(0)">最新签到</li>
+              <li :class="{'layui-this': current === 1}" @click="choose(1)">今日最快</li>
+              <li :class="{'layui-this': current === 2}" @click="choose(2)">总签到榜</li>
+            </ul>
+            <div class="layui-tab-content">
+              <ul class="layui-tab-item layui-show">
+                <li v-for="(item, index) in lists" :key="'sign'+index">
+                  <img src="/img/bear-200-200.jpg" alt="">
+                  <cite class="fly-link">{{item.name}}</cite>
+                  <span class="fly-grey" v-if="current!=2">签到于 {{ item.created }}</span>
+                  <span class="fly-grey" v-else>已经连续签到 <i class="orange">22</i> 天</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -75,15 +101,30 @@ export default {
   name: 'Sign',
   data () {
     return {
-      isShow: true
+      isShow: false,
+      showList: false,
+      current: 0,
+      lists: [
+        { name: 'test1', count: 1, created: '2020-10-22' },
+        { name: 'test2', count: 2, created: '2020-10-22' },
+        { name: 'test3', count: 3, created: '2020-10-22' },
+        { name: 'test4', count: 4, created: '2020-10-22' }
+      ]
     }
   },
   methods: {
+    showTop () {
+      this.showList = true
+    },
+    choose (index) {
+      this.current = index
+    },
     showInfo () {
       this.isShow = true
     },
     close () {
       this.isShow = false
+      this.showList = false
     }
   }
 }
@@ -124,5 +165,23 @@ export default {
 }
 .layui-layer-content{
   padding: 20px;
+}
+.layui-tab-content{
+  padding: 0 10px;
+}
+.layui-tab-item{
+  line-height: 45px;
+  li{
+    border-bottom: 1px dotted #dcdcdc;
+    &:last-child{
+      border-bottom: none;
+    }
+  }
+  img{
+    width: 30px;
+    height: 30px;
+    border-radius: 2px;
+    margin-right: 10px;
+  }
 }
 </style>

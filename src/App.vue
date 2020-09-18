@@ -51,4 +51,7 @@ export default {
   .gray{
     color: #999;
   }
+  .pd0{
+    padding: 0 !important;
+  }
 </style>
